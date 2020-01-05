@@ -19,7 +19,6 @@ protected:
     fw::ShaderProgram* m_pShaderColor;
     fw::ShaderProgram* m_pShaderTexture;
     Mesh* m_pMeshTriangle;
-    Mesh* m_pMeshCircle;
 	Mesh* m_pMeshCursor; 
     GLuint m_TextureBall;
 	GLuint m_TextureAtlas; 
@@ -28,7 +27,6 @@ protected:
 
     Player* m_pPlayer;
     Camera* m_pCamera;
-    Ball* m_pBall;
 
     PlayerController* m_pController;
 

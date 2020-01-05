@@ -20,7 +20,6 @@ Game::Game(Framework* pFramework)
     m_pShaderColor = nullptr;
     m_pShaderTexture = nullptr;
     m_pMeshTriangle = nullptr;
-    m_pMeshCircle = nullptr;
 	m_pMeshCursor = nullptr; 
     m_TextureBall = 0;
 	m_TextureAtlas = 0;
@@ -28,7 +27,6 @@ Game::Game(Framework* pFramework)
 
     m_pPlayer = nullptr;
     m_pCamera = nullptr;
-    m_pBall = nullptr;
 
     m_pController = new PlayerController();
 	m_pSpriteSheet = new SpriteSheet(); 
@@ -40,7 +38,6 @@ Game::~Game()
 
     delete m_pPlayer;
     delete m_pCamera;
-    delete m_pBall;
 	delete m_pSpriteSheet;
 
     delete m_pTilemap;
@@ -49,7 +46,6 @@ Game::~Game()
 	glDeleteTextures( 1, &m_TextureAtlas ); 
 
     delete m_pMeshTriangle;
-    delete m_pMeshCircle;
 	delete m_pMeshCursor; 
 
     delete m_pShaderColor;
@@ -74,9 +70,6 @@ void Game::Init()
     m_pMeshTriangle = new Mesh();
     m_pMeshTriangle->GenerateTriangle();
 
-    m_pMeshCircle = new Mesh();
-    m_pMeshCircle->GenerateCircle();
-
 	m_pMeshCursor = new Mesh(); 
 	m_pMeshCursor->GenerateCursor(); 
 
@@ -90,7 +83,6 @@ void Game::Init()
     // Create our GameObjects.
     m_pPlayer = new Player( this, m_pMeshCursor, m_pShaderTexture, m_TextureAtlas, m_pSpriteSheet, vec2( 30, 50 ), 0, m_pTilemap, m_pController);
     m_pCamera = new Camera( this, vec2( 50, 50 ), vec2( 1/(GetWorldWidth()/2), 1/(GetWorldHeight()/2) ) );
-    m_pBall = new Ball( this, m_pMeshCircle, m_pShaderTexture, m_TextureBall, vec2( 20, 20 ) );
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -114,7 +106,6 @@ void Game::Update(float deltaTime)
 
     m_pPlayer->Update( deltaTime );
     m_pCamera->Update( deltaTime );
-    m_pBall->Update( deltaTime );
 
     CheckForCollisions();
 }
@@ -136,9 +127,4 @@ void Game::Draw()
 
 void Game::CheckForCollisions()
 {
-    if( m_pBall->IsColliding( m_pPlayer ) )
-    {
-        m_pPlayer->OnCollision( m_pBall );
-        m_pBall->OnCollision( m_pPlayer );
-    }
 }
